@@ -29,5 +29,7 @@ CREATE TABLE IF NOT EXISTS bills (
     units INT NOT NULL,
     amount DOUBLE NOT NULL,
     bill_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    due_date DATE,
+    payment_status VARCHAR(20) DEFAULT 'Unpaid',
     FOREIGN KEY (cid) REFERENCES customers(cid) ON DELETE CASCADE
 );

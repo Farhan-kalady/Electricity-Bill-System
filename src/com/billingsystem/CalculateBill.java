@@ -3,6 +3,7 @@ package com.billingsystem;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 
 public class CalculateBill extends JFrame implements ActionListener {
 
@@ -101,7 +102,8 @@ public class CalculateBill extends JFrame implements ActionListener {
                     billAmount = (100 * 1.5) + (100 * 2.5) + ((units - 200) * 4.0);
                 }
 
-                String query = "INSERT INTO bills (cid, prev_reading, curr_reading, units, amount) VALUES ('" + cid + "', " + prevRead + ", " + currRead + ", " + units + ", " + billAmount + ")";
+                LocalDate dueDate = LocalDate.now().plusDays(15);
+                String query = "INSERT INTO bills (cid, prev_reading, curr_reading, units, amount, due_date, payment_status) VALUES ('" + cid + "', " + prevRead + ", " + currRead + ", " + units + ", " + billAmount + ", '" + java.sql.Date.valueOf(dueDate) + "', 'Unpaid')";
 
                 Conn c = new Conn();
                 c.s.executeUpdate(query);

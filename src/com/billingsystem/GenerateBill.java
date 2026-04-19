@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
 import java.awt.event.*;
+import java.time.LocalDate;
 
 public class GenerateBill extends JFrame implements ActionListener {
     
@@ -76,6 +77,26 @@ public class GenerateBill extends JFrame implements ActionListener {
                     t1.append(" ---------------------------------\n");
                     t1.append(" TOTAL PAYABLE    : ₹ " + rs2.getDouble("amount") + "\n");
                     t1.append(" BILL DATE        : " + rs2.getString("bill_date") + "\n");
+                    
+                    String dueDateStr = rs2.getString("due_date");
+                    String paymentStatus = rs2.getString("payment_status");
+                    
+                    if (dueDateStr != null) {
+                        try {
+                            LocalDate due = java.sql.Date.valueOf(dueDateStr).toLocalDate();
+                            if (LocalDate.now().isAfter(due) && "Unpaid".equalsIgnoreCase(paymentStatus)) {
+                                paymentStatus = "Overdue";
+                            }
+                        } catch (Exception ex) {
+                            // Default just in case
+                        }
+                    } else {
+                        dueDateStr = "Not Available";
+                        paymentStatus = "N/A";
+                    }
+                    
+                    t1.append(" DUE DATE         : " + dueDateStr + "\n");
+                    t1.append(" STATUS           : " + paymentStatus + "\n");
                 } else {
                     t1.append(" No bills found for this customer.\n");
                 }
