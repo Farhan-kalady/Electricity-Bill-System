@@ -1,0 +1,310 @@
+\documentclass[a4paper,12pt]{article}
+
+% ---------- PACKAGES ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{tabularx} % Required for tables
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{eso-pic}
+\usepackage{fancyhdr}
+\usepackage{caption}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+% ---------- BORDER ----------
+\AddToShipoutPicture{
+\begin{tikzpicture}[remember picture, overlay]
+\draw[line width=1.5pt]
+  ($(current page.north west) + (1cm,-1cm)$)
+  rectangle
+  ($(current page.south east) + (-1cm,1cm)$);
+\end{tikzpicture}
+}
+
+% ---------- PAGE NUMBER ----------
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+%--------------------------------------------------
+% COVER PAGE
+%--------------------------------------------------
+
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+
+\vspace{1cm}
+
+\textbf{\Large YOUR COLLEGE NAME}\\
+\vspace{0.3cm}
+{\normalsize (College Details / Accreditation)}
+
+\vspace{1.6cm}
+
+\includegraphics[width=6cm]{logo.png}
+
+\vspace{1.6cm}
+
+\textbf{\Large PROJECT REPORT}\\
+\vspace{0.4cm}
+\textbf{\Large ON}
+
+\vspace{0.5cm}
+
+\textbf{\Large ELECTRICITY BILL MANAGEMENT SYSTEM}
+
+\vspace{1.5cm}
+
+\textit{Submitted in partial fulfillment of the requirement for the award of}\\
+\textit{Your Degree Name}
+
+\vspace{1.5cm}
+
+\textbf{Submitted by}
+
+\vspace{0.6cm}
+
+\textbf{\large YOUR NAME}\\
+Department Name\\
+(Your Roll Number)
+
+\vspace{1.3cm}
+
+\textbf{\large YEAR}
+
+\vfill
+\end{center}
+\end{titlepage}
+
+%--------------------------------------------------
+% TOC
+%--------------------------------------------------
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+%--------------------------------------------------
+
+\section{Introduction}
+
+\subsection{Purpose of the System}
+The Electricity Bill Management System is a desktop application designed to automate and streamline the process of recording, calculating, computing, and managing electricity bills. It provides an efficient way to manage customer data, record meter readings, and generate accurate bills based on predefined tariff slabs.
+
+\subsection{Real-world Problem}
+Traditionally, electricity billing has been a manual process involving physical meter readings, manual calculations, and paper-based record-keeping. This manual system is prone to human errors, delays in bill generation, and difficulties in tracking payment histories and unpaid dues accurately. Misplaced records can cause significant discrepancies leading to customer dissatisfaction and financial loss.
+
+\subsection{Objective of the Project}
+The primary objective of this project is to develop a reliable, fast, and user-friendly software solution that:
+\begin{itemize}
+    \item Eliminates manual errors in bill calculations.
+    \item Maintains a centralized, secure database of customers and their billing histories.
+    \item Automatically tracks payment statuses and identifies overdue bills.
+    \item Streamlines the bill generation process with automated due dates.
+\end{itemize}
+
+%--------------------------------------------------
+
+\section{Modules / Functionalities}
+
+\subsection{Login Module}
+Provides secure access to the system for authorized admin users. It prevents unauthorized access to sensitive customer and financial data.
+
+\subsection{Customer Management Module}
+Allows the admin to add new customers, update existing information, and view customer details. Each customer is assigned a unique Meter Number upon registration.
+
+\subsection{Bill Calculation Module}
+Automatically calculates electricity consumption and total bill amounts based on the difference between the previous and current month unit readings using a predefined slab-based tariff logic.
+
+\subsection{Bill Generation Module}
+Generates a comprehensive bill detail view containing the customer's information, meter number, consumed units, calculated charges, and an automatically generated due date.
+
+\subsection{Bill History Module}
+Displays a tabular record of all generated bills. It allows the admin to search for specific bills based on meter numbers or months.
+
+\subsection{Payment Module}
+Manages the payment status of each bill. It tracks whether a bill is \textit{Paid}, \textit{Unpaid}, or \textit{Overdue} based on its generated due date, and allows admins to update the status once a payment is made.
+
+%--------------------------------------------------
+
+\section{Technology Used}
+
+\subsection{Backend Technologies}
+\begin{itemize}
+    \item \textbf{Programming Language:} Java (JDK 8 or above) - used for core business logic and structural implementation.
+    \item \textbf{Database Management:} MySQL - a relational database to store large volumes of customer, admin, and billing data securely.
+    \item \textbf{Database Connectivity:} JDBC (Java Database Connectivity) - the API used to connect and execute SQL queries from the Java application to the MySQL database.
+    \item \textbf{IDE Used:} Visual Studio Code / Eclipse / IntelliJ IDEA - for writing, organizing, and debugging the code efficiently.
+\end{itemize}
+
+\subsection{Frontend Technologies}
+\begin{itemize}
+    \item \textbf{Graphical User Interface:} Java Swing \& AWT - to build responsive and intuitive visual interfaces (forms, buttons, and tables).
+\end{itemize}
+
+%--------------------------------------------------
+
+\section{Implementation}
+
+\subsection{System Architecture}
+The project is built on the standard \textbf{3-Layer Architecture} to ensure separation of concerns, scalability, and maintainability.
+
+\begin{itemize}
+    \item \textbf{Presentation Layer:} This is the front-end part of the application constructed using \textbf{Java Swing} components (JFrame, JLabel, JTextField, JButton, JTable). It provides the user interface where the admin inputs data and visualizes outputs.
+    \item \textbf{Application Layer (Business Logic):} Written entirely in Java, this layer applies Object-Oriented Programming (OOP) concepts such as inheritance, encapsulation, and exception handling. It processes input from the GUI, performs complex constraints like slab tariff calculations, and interacts with the layer below.
+    \item \textbf{Database Layer:} Implemented using \textbf{MySQL}, this layer is responsible for the structured, persistent storage of data. It executes CRUD (Create, Read, Update, Delete) operations dispatched by the Application Layer via JDBC.
+\end{itemize}
+
+\subsection{Working Flow}
+The operational flow of the system occurs in the following sequential steps:
+\begin{enumerate}
+    \item \textbf{Login:} The administrator enters their username and password. The system verifies these credentials against the \texttt{Admin} table.
+    \item \textbf{Add Customer:} Admin enters a new user's information and assigns a unique Meter Number. The data is pushed to the database.
+    \item \textbf{Enter Readings \& Calculate:} Admin specifies the month, meter number, and the units consumed.
+    \item \textbf{Generate Bill:} The system formulates the complete bill format including a dynamic \texttt{due\_date} (e.g., 15 days from generation) and sets the initial payment status as \texttt{Unpaid}.
+    \item \textbf{Store Data:} Bill information is safely stored within the \texttt{Bills} database table.
+    \item \textbf{Update Payment Status:} Utilizing the historical records function, admins can view pending bills and toggle the status to \texttt{Paid} once physical or external transaction happens.
+\end{enumerate}
+
+\subsection{Algorithms / Logic}
+\begin{itemize}
+    \item \textbf{Slab-Based Tariff Calculation:} Bills are not on a flat rate. Dynamic calculation changes based on brackets of power consumed (e.g., first 100 units at a lower rate, next units at a higher rate).
+    \item \textbf{Automatic Due Date Generation:} Relieves admin workload by dynamically appending a specific due timeframe upon generation of the respective bill.
+    \item \textbf{Payment Status Tracking:} Intelligent status indicators. If the system detects a bill not marked \texttt{Paid} is past its \texttt{due\_date}, it can be classified as \texttt{Overdue}.
+\end{itemize}
+
+\subsection{Database Design}
+The system stores its schema in a relational format. Below is the structural representation of the primary tables used.
+
+\subsubsection*{Admin Table}
+Stores credentials for secure admin login.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\ \hline
+username & VARCHAR(50) & Primary Key. Admin's unique login username. \\ \hline
+password & VARCHAR(50) & Admin's login password. \\ \hline
+\end{tabularx}
+\caption{Admin Login Table}
+\end{table}
+
+\subsubsection*{Customers Table}
+Maintains the personal and contact details of all users subscribed to the electricity board.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\ \hline
+meter\_no & VARCHAR(20) & Primary Key. Unique identification number for the customer's meter. \\ \hline
+name & VARCHAR(100) & Full name of the customer. \\ \hline
+address & VARCHAR(255) & Residential address. \\ \hline
+city & VARCHAR(50) & City of residence. \\ \hline
+email & VARCHAR(100) & Customer's contact email. \\ \hline
+phone & VARCHAR(15) & Customer's active phone number. \\ \hline
+\end{tabularx}
+\caption{Customers Details Table}
+\end{table}
+
+\subsubsection*{Bills Table}
+Stores computation and generation records of individual electricity bills.
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\textbf{Field Name} & \textbf{Data Type} & \textbf{Description} \\ \hline
+id & INT & Primary Key (Auto Increment). Unique bill ID. \\ \hline
+meter\_no & VARCHAR(20) & Foreign Key. Link to the Customers table. \\ \hline
+month & VARCHAR(20) & The billing month (e.g., January, February). \\ \hline
+units & INT & Electricity consumed in units (kWh). \\ \hline
+total\_bill & DECIMAL(10,2) & The calculated total billed amount. \\ \hline
+due\_date & DATE & The final date the bill should be paid by without penalty. \\ \hline
+status & VARCHAR(20) & Current payment status (Paid, Unpaid, Overdue). \\ \hline
+\end{tabularx}
+\caption{Bills Tracking Table}
+\end{table}
+
+%--------------------------------------------------
+
+\section{Screenshots}
+
+\subsection{Login Page}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{login_screenshot.png}
+\caption{Admin Login Screen}
+\end{figure}
+
+\subsection{Add Customer Page}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Add customer page.png}
+\caption{Customer Registration Form}
+\end{figure}
+
+\subsection{Bill Calculation Page}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Bill Calculation page.png}
+\caption{Calculate \& Generate Bill Screen}
+\end{figure}
+
+\subsection{Generated Bill Page}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Generated Bill page.png}
+\caption{Invoice Summary Design}
+\end{figure}
+
+\subsection{Bill History Page}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Bill History page.png}
+\caption{JTable Display of Bill History}
+\end{figure}
+
+%--------------------------------------------------
+
+\section{Conclusion}
+
+\subsection{Summary of Project}
+The Electricity Bill Management System provides a highly efficient alternative to physical record-keeping and computations. By deploying Java for logic and GUI alongside MySQL for reliable records management, it delivers a cohesive standalone solution for billing management operations.
+
+\subsection{Benefits}
+Implementation of this system guarantees computational accuracy, effectively wiping out human arithmetic errors. The administrative workflow becomes heavily streamlined by automated date tracking, quick record retrieval, and centralized customer relationship management tools.
+
+\subsection{Future Improvements}
+Future iterations of this system could be greatly expanded in utility by implementing the following features:
+\begin{itemize}
+    \item \textbf{Online Payment Gateway:} Integrating API services (e.g., Stripe or Razorpay) to allow direct online status fulfillment rather than relying solely on admin intervention.
+    \item \textbf{Web Application Conversion:} Shifting from a local Desktop application architecture to a secure Web Service allowing end-user online portals to view their specific histories.
+    \item \textbf{SMS/Email Notifications:} Automatic messaging components deployed on bill generation to notify users immediately of outstanding sums via email or SMS.
+\end{itemize}
+
+%--------------------------------------------------
+
+\section*{References}
+\addcontentsline{toc}{section}{References}
+
+\begin{itemize}
+    \item Oracle Java SE Documentation (\url{https://docs.oracle.com/javase/})
+    \item MySQL 8.0 Reference Manual (\url{https://dev.mysql.com/doc/refman/8.0/en/})
+    \item W3Schools SQL Tutorials (\url{https://www.w3schools.com/sql/})
+    \item GeeksforGeeks Java Swing GUI Development (\url{https://www.geeksforgeeks.org/})
+\end{itemize}
+
+\end{document}
